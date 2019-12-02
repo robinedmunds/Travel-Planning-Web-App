@@ -1,3 +1,9 @@
 %bottom-border {
   border-bottom: medium solid $text-colour;
 }
+
+%horizontal-borders {
+  border: none;
+  border-bottom: medium solid $text-colour;
+  border-top: medium solid $text-colour;
+}
