@@ -1,5 +1,5 @@
 // js
-// import "./js/main.js";
+import "./js/main.js";
 
 // styles
 import "./styles/reset.css";
