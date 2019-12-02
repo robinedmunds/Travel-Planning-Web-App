@@ -1,0 +1,55 @@
+@import "colours";
+@import "extends";
+
+.body-container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 1720px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+nav {
+  display: block;
+  background-color: $lighter;
+  @extend %bottom-border;
+
+  li {
+    float: right;
+
+    a {
+      display: block;
+      text-align: center;
+      padding: 24px 24px;
+      text-decoration: none;
+      color: $text-colour;
+      font-weight: 700;
+      &:hover {
+        background-color: $lightest;
+      }
+      &:active {
+        background-color: $highlight-bright;
+      }
+    }
+  }
+}
+
+header {
+  display: block;
+  padding: 48px 24px;
+  @extend %bottom-border;
+}
+
+main {
+  display: block;
+}
+
+footer {
+  display: block;
+  padding: 12px 24px;
+  text-align: center;
+}

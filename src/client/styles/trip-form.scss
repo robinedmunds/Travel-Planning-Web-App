@@ -1,0 +1,45 @@
+@import "colours";
+@import "extends";
+
+.add-trip-form {
+  display: block;
+  background-color: $lightest;
+  padding: 48px 24px;
+  // @extend %bottom-border;
+
+  button {
+    margin: 24px auto 0;
+  }
+
+  h1 {
+    padding: 0 0 24px 0;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: auto;
+  }
+
+  .form-inline {
+    display: flex;
+    flex-flow: row wrap;
+    padding-bottom: 12px;
+    vertical-align: middle;
+  
+    label {
+      font-size: 1.6em;
+      margin: auto 0;
+    }
+  
+    input {
+      margin: 0 0 0 auto;
+      font-family: inherit;
+      font-size: 1.2em;
+      width: 50%;
+      background-color: $lighter;
+      border: medium solid $text-colour;
+    }
+  }
+}

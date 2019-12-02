@@ -1,0 +1,32 @@
+@import "colours";
+@import "extends";
+
+.travel-card {
+  display: flex;
+  flex-direction: row;
+  background-color: $lighter;
+  padding: 48px 0;
+  @extend %bottom-border;
+}
+
+.travel-card-left {
+  max-width: 40%;
+  margin: 0px 24px;
+  img {
+    max-width: 100%;
+  }
+}
+
+.travel-card-right {
+  margin: 0px 24px;
+}
+
+.travel-card-buttons {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+
+  button {
+    margin: 12px;
+  }
+}
