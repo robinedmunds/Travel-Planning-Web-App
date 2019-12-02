@@ -1,24 +1,19 @@
 @import "colours";
 @import "extends";
 
+
+// BASE
 .travel-card {
   display: flex;
-  flex-direction: row;
   background-color: $lighter;
   padding: 48px 0;
   @extend %bottom-border;
 }
 
 .travel-card-left {
-  max-width: 40%;
-  margin: 0px 24px;
   img {
     max-width: 100%;
   }
-}
-
-.travel-card-right {
-  margin: 0px 24px;
 }
 
 .travel-card-buttons {
@@ -28,5 +23,39 @@
 
   button {
     margin: 12px;
+  }
+}
+
+
+// MOBILE
+@media screen and (max-width: 980px) {
+  .travel-card {
+    flex-direction: column;
+  }
+
+  .travel-card-left {
+    max-width: 80%;
+    margin: 24px auto;
+  }
+
+  .travel-card-right {
+    margin: 24px;
+  }
+}
+
+
+// DESKTOP
+@media screen and (min-width: 981px) {
+  .travel-card {
+    flex-direction: row;
+  }
+
+  .travel-card-left {
+    max-width: 40%;
+    margin: 0 24px;
+  }
+
+  .travel-card-right {
+    margin: 0 24px;
   }
 }
