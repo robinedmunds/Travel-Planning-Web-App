@@ -30,3 +30,28 @@ const dummyRes2 = {
 const main = document.querySelector("main");
 main.insertAdjacentHTML("afterbegin", travelCard(dummyRes));
 main.insertAdjacentHTML("afterbegin", travelCard(dummyRes2));
+
+const addTripBtn = document.getElementById("add-trip");
+addTripBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  // get data from form fields
+  const destinationInput = document.getElementById("destination");
+  const destination = destinationInput.value;
+  if (destination) {
+    console.log(destination);
+  } else {
+    console.log("No dest entered");
+  };
+  const departureInput = document.getElementById("departure");
+  const departure = departureInput.value;
+  if (departure) {
+    const departureArray = departure.split("/").reverse();
+    const isoDate = departureArray.join("-");
+    if (!isNaN(Date.parse(isoDate))) {
+      const dateObj = new Date(isoDate);
+      console.log(dateObj);
+    } else {
+      console.log("date invalid");
+    }
+  };
+});
