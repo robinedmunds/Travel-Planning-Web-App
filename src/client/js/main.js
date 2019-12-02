@@ -15,5 +15,18 @@ const dummyRes = {
   }
 };
 
+const dummyRes2 = {
+  city: "London",
+  country: "UK",
+  departDate: new Date(2021, 8-1, 13),
+  picture: "https://upload.wikimedia.org/wikipedia/commons/b/b3/City_hall_London_at_dawn_%28cropped%29.jpg",
+  weather: {
+    high: 19,
+    low: 8,
+    forecast: "Lots of rain. Bring a brolly."
+  }
+};
+
 const main = document.querySelector("main");
-main.insertAdjacentHTML("afterbegin", travelCard(dummyRes))
+main.insertAdjacentHTML("afterbegin", travelCard(dummyRes));
+main.insertAdjacentHTML("afterbegin", travelCard(dummyRes2));
