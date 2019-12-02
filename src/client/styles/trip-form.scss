@@ -5,15 +5,15 @@
 .add-trip-form {
   display: block;
   background-color: $lightest;
-  padding: 48px 24px;
+  padding: $padding-base*2 $padding-base;
   @extend %bottom-border;
 
   button {
-    margin: 24px auto 0;
+    margin: $padding-base auto 0;
   }
 
   h1 {
-    padding: 0 0 24px 0;
+    padding: 0 0 $padding-base 0;
   }
   
   form {
@@ -24,14 +24,14 @@
   }
 
   .form-inline {
-    padding-bottom: 24px;
+    padding-bottom: $padding-base;
   
     label {
       font-size: 1.6em;
     }
   
     input {
-      padding: 12px;
+      padding: $padding-base/2;
       font-family: inherit;
       font-size: 1.2em;
       background-color: $lighter;

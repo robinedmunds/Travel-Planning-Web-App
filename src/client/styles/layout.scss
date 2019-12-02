@@ -22,7 +22,7 @@ nav {
     a {
       display: block;
       text-align: center;
-      padding: 24px 24px;
+      padding: $padding-base $padding-base;
       text-decoration: none;
       color: $text-colour;
       font-weight: 700;
@@ -38,7 +38,7 @@ nav {
 
 header {
   display: block;
-  padding: 48px 24px;
+  padding: $padding-base*2 $padding-base;
   @extend %bottom-border;
 }
 
@@ -48,7 +48,7 @@ main {
 
 footer {
   display: block;
-  padding: 12px 24px;
+  padding: $padding-base/2 $padding-base;
   text-align: center;
 }
 

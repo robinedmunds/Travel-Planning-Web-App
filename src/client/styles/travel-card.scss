@@ -6,7 +6,7 @@
 .travel-card {
   display: flex;
   background-color: $lighter;
-  padding: 48px 0;
+  padding: $padding-base*2 0;
   @extend %bottom-border;
 }
 
@@ -22,7 +22,7 @@
   justify-content: space-around;
 
   button {
-    margin: 12px;
+    margin: $padding-base/2;
   }
 }
 
@@ -35,11 +35,11 @@
 
   .travel-card-left {
     max-width: 80%;
-    margin: 24px auto;
+    margin: $padding-base auto;
   }
 
   .travel-card-right {
-    margin: 24px;
+    margin: $padding-base;
   }
 }
 
@@ -52,10 +52,10 @@
 
   .travel-card-left {
     max-width: 40%;
-    margin: 0 24px;
+    margin: 0 $padding-base;
   }
 
   .travel-card-right {
-    margin: 0 24px;
+    margin: 0 $padding-base;
   }
 }
