@@ -73,6 +73,21 @@ async function getWeatherData(destination, date=null) {
   };
 };
 
+async function getDestinationPicture(query) {
+  // query pixabay with dest, return first img url
+  const key = process.env.PIXABAY_KEY;
+  const url = `https://pixabay.com/api/?q=${query}&image_type=photo&min_height=720&orientation=horizontal&safesearch=true&category=travel&key=${key}`;
+  const method = "GET";
+  try {
+    const response = await fetchAPI(url, method);
+    const picture = response.hits[0].largeImageURL;
+    const tags = response.hits[0].tags;
+    return { picture: picture, tags: tags };
+  } catch { err } {
+    console.log("Error in getDestinationPicture: " + err);
+  };
+};
+
 app.get("/", (req, res) => {
   res.send("responding on path \"/\"");
 });
@@ -91,10 +106,7 @@ app.post("/api/travel-card", (req, res) => {
 });
 
 const test = async () => {
-  console.log(await getWeatherData("cairo", new Date("2021-04-01")));
+  // console.log(await getWeatherData("cairo", new Date("2021-04-01")));
+  console.log(await getDestinationPicture("milan, italy"));
 };
 test();
-
-// fetchAPI("http://api.geonames.org/searchJSON?q=london,uk&maxRows=1&username=roblobob&password=OTa0Fwnp5FkOiQSCxsM", "GET");
-// fetchAPI("https://api.darksky.net/forecast/75c000d2c0c6da4bcea32364d3003936/51.50853,-0.12574,1585180800", "GET");
-// fetchAPI("https://pixabay.com/api/?q=london&image_type=photo&min_height=720&orientation=horizontal&safesearch=true&category=travel&key=14499565-1a48a4402908c2a23d27f5ba0", "GET");
