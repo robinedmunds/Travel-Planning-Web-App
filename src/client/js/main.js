@@ -6,6 +6,8 @@ import { addDummyTravelCards } from "./addDummy";
 function addTripButtonClickCallback(event) {
   event.preventDefault();
 
+  const destinationInput = document.getElementById("destination");
+  const destination = destinationInput.value;
   if (!destination) {
     console.log("No dest entered");
     // TODO: add error feedback to DOM
