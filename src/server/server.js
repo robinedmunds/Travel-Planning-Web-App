@@ -48,7 +48,10 @@ async function getDestinationCoords(destination) {
     const response = await fetchAPI(url, method);
     const latitude = response.geonames[0].lat;
     const longitude = response.geonames[0].lng;
-    return { latitude: latitude, longitude: longitude };
+    const city = response.geonames[0].name;
+    const country = response.geonames[0].countryName;
+    // return { latitude: latitude, longitude: longitude };
+    return { latitude, longitude, city, country };
   } catch (err) {
     console.log("Error in getDestinationCoords: " + err);
   };
@@ -94,6 +97,25 @@ async function getDestinationPicture(query) {
   };
 };
 
+async function buildTravelCardResponse(destination, departDate) {
+  // use api call funcs to build /api/travel-card response obj
+  class TravelCardResponse {
+    
+  }
+
+  // {
+  //   city: "Pietermaritzburg",
+  //   country: "South Africa",
+  //   departDate: new Date(2020, 4 - 1, 24),
+  //   picture: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Upland_South_Africa_Savanna.jpg",
+  //   weather: {
+  //     high: 32,
+  //     low: 24,
+  //     forecast: "Hot and sunny throughout the day. Wear a hat."
+  //    }
+  // }
+};
+
 app.get("/", (req, res) => {
   res.send("responding on path \"/\"");
 });
@@ -112,8 +134,9 @@ app.post("/api/travel-card", (req, res) => {
 });
 
 const test = async () => {
-  console.log(await getWeatherData("evesham"));
+  console.log(await getDestinationCoords("london, uk"));
+  // console.log(await getWeatherData("evesham"));
   // console.log(await getWeatherData("evesham,uk", new Date("2021-04-01")));
   // console.log(await getDestinationPicture("milan, italy"));
 };
-test();
+// test();
