@@ -1,22 +1,24 @@
-export function travelCard(resObj) {
+"use strict";
+
+export function travelCard(res) {
   const countdownDaysCalc = (departDate) => {
     const msInDay = 24 * 60 * 60 * 1000;
     const difference = departDate - Date.now();
     return Math.ceil(difference / msInDay);
   };
 
-  const picture = resObj.picture;
-  const city = resObj.city;
-  const country = resObj.country;
-  const departDate = resObj.departDate.toLocaleDateString("en-GB", {
+  const city = res.city;
+  const country = res.country;
+  const departDate = res.departDate.toLocaleDateString("en-GB", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
-  const countdownDays = countdownDaysCalc(resObj.departDate);
-  const highTemp = resObj.weather.high;
-  const lowTemp = resObj.weather.low;
-  const forecast = resObj.weather.forecast;
+  const countdownDays = countdownDaysCalc(res.departDate);
+  const picture = res.picture;
+  const highTemp = res.weather.high;
+  const lowTemp = res.weather.low;
+  const forecast = res.weather.forecast;
 
   return `
     <div class="travel-card">
