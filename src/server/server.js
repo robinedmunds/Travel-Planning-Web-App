@@ -54,6 +54,25 @@ async function getDestinationCoords(destination) {
   };
 };
 
+async function getWeatherData(destination, date=null) {
+  // take coords from getDestinationCoords func, call dark sky api, return response
+  const coords = await getDestinationCoords(destination);
+  const key = process.env.DARKSKY_KEY;
+  const latitude = coords.latitude;
+  const longitude = coords.longitude;
+  let url = `https://api.darksky.net/forecast/${key}/${latitude},${longitude}`;
+  const method = "GET";
+  if (date) {
+    const epochTime = Math.floor(date / 1000);
+    url = url + `,${epochTime}`;
+  };
+  try {
+    return await fetchAPI(url, method);
+  } catch {err} {
+    console.log("Error in getWeatherData: " + err);
+  };
+};
+
 app.get("/", (req, res) => {
   res.send("responding on path \"/\"");
 });
@@ -70,6 +89,11 @@ app.post("/api/travel-card", (req, res) => {
     res.send("Error: Expected POST data invalid or missing. e.g destination=\"Paris, UK\"&departDate=\"2021-04-1T00:00:00.000Z\"");
   };
 });
+
+const test = async () => {
+  console.log(await getWeatherData("cairo", new Date("2021-04-01")));
+};
+test();
 
 // fetchAPI("http://api.geonames.org/searchJSON?q=london,uk&maxRows=1&username=roblobob&password=OTa0Fwnp5FkOiQSCxsM", "GET");
 // fetchAPI("https://api.darksky.net/forecast/75c000d2c0c6da4bcea32364d3003936/51.50853,-0.12574,1585180800", "GET");
