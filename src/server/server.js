@@ -4,6 +4,7 @@ var path = require("path"); // for manipulating dir paths
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const fetch = require("node-fetch");
 
 const app = express();
 app.use(express.static("dist"));
@@ -32,6 +33,13 @@ function buildTravelCardResponseDummy(destination, departDate) {
   };
 };
 
+async function fetchAPI(url, method) {
+  // generic async fetch func
+  fetch(url, { method: method })
+    .then(res => res.json())
+    .then(json => console.log(json));
+};
+
 app.get("/", (req, res) => {
   res.send("responding on path \"/\"");
 });
@@ -48,3 +56,7 @@ app.post("/api/travel-card", (req, res) => {
     res.send("Error: Expected POST data invalid or missing. e.g destination=\"Paris, UK\"&departDate=\"2021-04-1T00:00:00.000Z\"");
   };
 });
+
+// fetchAPI("http://api.geonames.org/searchJSON?q=london,uk&maxRows=1&username=roblobob&password=OTa0Fwnp5FkOiQSCxsM", "GET");
+// fetchAPI("https://api.darksky.net/forecast/75c000d2c0c6da4bcea32364d3003936/51.50853,-0.12574,1585180800", "GET");
+// fetchAPI("https://pixabay.com/api/?q=london&image_type=photo&min_height=720&orientation=horizontal&safesearch=true&category=travel&key=14499565-1a48a4402908c2a23d27f5ba0", "GET");
