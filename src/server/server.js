@@ -5,6 +5,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const fetch = require("node-fetch");
+const dotenv = require('dotenv').config();
 
 const app = express();
 app.use(express.static("dist"));
@@ -34,10 +35,23 @@ function buildTravelCardResponseDummy(destination, departDate) {
 };
 
 async function fetchAPI(url, method) {
-  // generic async fetch func
-  fetch(url, { method: method })
-    .then(res => res.json())
-    .then(json => console.log(json));
+  const response = await fetch(url, { method: method })
+    .then(res => res);
+  return await response.json();
+};
+
+async function getDestinationCoords(destination) {
+  const credentials = JSON.parse(process.env.GEONAMES);
+  const url = `http://api.geonames.org/searchJSON?q=${destination}&maxRows=1&username=${credentials.username}&password=${credentials.password}`;
+  const method = "GET";
+  try {
+    const response = await fetchAPI(url, method);
+    const latitude = response.geonames[0].lat;
+    const longitude = response.geonames[0].lng;
+    return { latitude: latitude, longitude: longitude };
+  } catch (err) {
+    console.log("Error in getDestinationCoords: " + err);
+  };
 };
 
 app.get("/", (req, res) => {
