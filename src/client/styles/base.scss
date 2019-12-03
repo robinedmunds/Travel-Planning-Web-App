@@ -58,3 +58,11 @@ button {
 img {
   @extend %horizontal-borders;
 }
+
+input {
+  @extend %horizontal-borders;
+}
+
+.borders-danger {
+  @extend %horizontal-borders-danger;
+}

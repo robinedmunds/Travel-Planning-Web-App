@@ -7,3 +7,9 @@
   border-bottom: medium solid $text-colour;
   border-top: medium solid $text-colour;
 }
+
+%horizontal-borders-danger {
+  border: none;
+  border-bottom: thick solid $danger;
+  border-top: thick solid $danger;
+}
