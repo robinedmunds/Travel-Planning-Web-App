@@ -1,43 +1,14 @@
 "use strict";
 
 import { travelCard } from "./travelCard";
+import { addDummyTravelCards } from "./addDummy";
 
-// create dummy response object containing all data required to build output
-// parse response data to DOM
-
-const dummyRes = {
-  city: "Pietermaritzburg",
-  country: "South Africa",
-  departDate: new Date(2020, 4-1, 24),
-  picture: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Upland_South_Africa_Savanna.jpg",
-  weather: {
-    high: 32,
-    low: 24,
-    forecast: "Hot and sunny throughout the day. Wear a hat."
-  }
-};
-
-const dummyRes2 = {
-  city: "London",
-  country: "UK",
-  departDate: new Date(2021, 8-1, 13),
-  picture: "https://upload.wikimedia.org/wikipedia/commons/b/b3/City_hall_London_at_dawn_%28cropped%29.jpg",
-  weather: {
-    high: 19,
-    low: 8,
-    forecast: "Lots of rain. Bring a brolly."
-  }
-};
-
-function addTripButtonClickEvent(event) {
+function addTripButtonClickCallback(event) {
   event.preventDefault();
 
-  const destinationInput = document.getElementById("destination");
-  const destination = destinationInput.value;
-  if (destination) {
-    console.log(destination);
-  } else {
+  if (!destination) {
     console.log("No dest entered");
+    // TODO: add error feedback to DOM
   };
 
   const departureInput = document.getElementById("departure");
@@ -50,17 +21,17 @@ function addTripButtonClickEvent(event) {
       console.log(dateObj);
     } else {
       console.log("date invalid");
+      // TODO: add error feedback to DOM
     };
   };
-}
+
+  // TODO: if both inputs valid, make fetch req to backend
+};
 
 function main() {
-  const main = document.querySelector("main");
-  main.insertAdjacentHTML("afterbegin", travelCard(dummyRes));
-  main.insertAdjacentHTML("afterbegin", travelCard(dummyRes2));
-  
+  addDummyTravelCards()
   const addTripButton = document.getElementById("add-trip");
-  addTripButton.addEventListener("click", (event) => { addTripButtonClickEvent(event) });
+  addTripButton.addEventListener("click", (event) => { addTripButtonClickCallback(event) });
 };
 
 main();
