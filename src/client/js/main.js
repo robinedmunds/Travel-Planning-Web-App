@@ -1,3 +1,5 @@
+"use strict";
+
 import { travelCard } from "./travelCard";
 
 // create dummy response object containing all data required to build output
@@ -27,14 +29,9 @@ const dummyRes2 = {
   }
 };
 
-const main = document.querySelector("main");
-main.insertAdjacentHTML("afterbegin", travelCard(dummyRes));
-main.insertAdjacentHTML("afterbegin", travelCard(dummyRes2));
-
-const addTripBtn = document.getElementById("add-trip");
-addTripBtn.addEventListener("click", (event) => {
+function addTripButtonClickEvent(event) {
   event.preventDefault();
-  // get data from form fields
+
   const destinationInput = document.getElementById("destination");
   const destination = destinationInput.value;
   if (destination) {
@@ -42,6 +39,7 @@ addTripBtn.addEventListener("click", (event) => {
   } else {
     console.log("No dest entered");
   };
+
   const departureInput = document.getElementById("departure");
   const departure = departureInput.value;
   if (departure) {
@@ -52,6 +50,17 @@ addTripBtn.addEventListener("click", (event) => {
       console.log(dateObj);
     } else {
       console.log("date invalid");
-    }
+    };
   };
-});
+}
+
+function main() {
+  const main = document.querySelector("main");
+  main.insertAdjacentHTML("afterbegin", travelCard(dummyRes));
+  main.insertAdjacentHTML("afterbegin", travelCard(dummyRes2));
+  
+  const addTripButton = document.getElementById("add-trip");
+  addTripButton.addEventListener("click", (event) => { addTripButtonClickEvent(event) });
+};
+
+main();
