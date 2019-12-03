@@ -1,7 +1,7 @@
 "use strict";
 
 import { travelCard } from "./travelCard";
-import { addDummyTravelCards } from "./addDummy";
+import { addDummyTravelCards } from "./addDummy";  // TODO: remove, testing
 
 function addTripButtonClickCallback(event) {
   event.preventDefault();
@@ -23,6 +23,7 @@ function addTripButtonClickCallback(event) {
     const departureArray = departure.split("/").reverse();
     const isoDate = departureArray.join("-");
     if (!isNaN(Date.parse(isoDate))) {
+      // valid user input date
       departureInput.classList.remove("borders-danger");
       const dateObj = new Date(isoDate);
       console.log(dateObj);  // TODO: remove, testing
