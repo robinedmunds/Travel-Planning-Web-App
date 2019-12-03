@@ -24,6 +24,16 @@ app.get("/", (req, res) => {
 
 app.post("/api/travel-card", (req, res) => {
   // TODO: take post data, respond with dummy obj
-  console.log(JSON.stringify(req.body));
-  res.send("responding on path \"/api/travel-card\"");
+  const postData = req.body;
+  if (postData.destination && postData.departDate) {
+    const destination = postData.destination;
+    const departDate = new Date(postData.departDate);  // TODO: validate date
+
+    const bodyString = JSON.stringify(req.body);
+    console.log(bodyString);
+    const departDateUK = [departDate.getDate(), departDate.getMonth()+1, departDate.getFullYear()].join("/");
+    res.send(`destination: ${destination}\ndepartDate: ${departDateUK}`);
+  } else {
+    res.send("Error: Expected POST data invalid or missing. e.g destination=\"Paris, UK\"&departDate=\"2021-04-1T00:00:00.000Z\"");
+  };
 });
