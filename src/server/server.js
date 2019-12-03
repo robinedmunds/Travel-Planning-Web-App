@@ -8,6 +8,7 @@ const cors = require("cors");
 const app = express();
 app.use(express.static("dist"));
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -23,5 +24,6 @@ app.get("/", (req, res) => {
 
 app.post("/api/travel-card", (req, res) => {
   // TODO: take post data, respond with dummy obj
+  console.log(JSON.stringify(req.body));
   res.send("responding on path \"/api/travel-card\"");
 });
