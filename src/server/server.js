@@ -56,18 +56,24 @@ async function getDestinationCoords(destination) {
 
 async function getWeatherData(destination, date=null) {
   // take coords from getDestinationCoords func, call dark sky api, return response
+  // return only, high, low, text summary
   const coords = await getDestinationCoords(destination);
   const key = process.env.DARKSKY_KEY;
   const latitude = coords.latitude;
   const longitude = coords.longitude;
-  let url = `https://api.darksky.net/forecast/${key}/${latitude},${longitude}`;
+  let url = `https://api.darksky.net/forecast/${key}/${latitude},${longitude}?exclude=currently,flags`;
   const method = "GET";
   if (date) {
     const epochTime = Math.floor(date / 1000);
     url = url + `,${epochTime}`;
   };
   try {
-    return await fetchAPI(url, method);
+    const toCelsius = (f) => Math.round((f-32) * (5/9));
+    const response = await fetchAPI(url, method);
+    const highTemp = toCelsius(response.daily.data[0].temperatureHigh);
+    const lowTemp = toCelsius(response.daily.data[0].temperatureLow);
+    const summary = response.daily.data[0].summary;
+    return { high: highTemp, low: lowTemp, forecast: summary };
   } catch {err} {
     console.log("Error in getWeatherData: " + err);
   };
@@ -106,7 +112,8 @@ app.post("/api/travel-card", (req, res) => {
 });
 
 const test = async () => {
-  // console.log(await getWeatherData("cairo", new Date("2021-04-01")));
-  console.log(await getDestinationPicture("milan, italy"));
+  console.log(await getWeatherData("evesham"));
+  // console.log(await getWeatherData("evesham,uk", new Date("2021-04-01")));
+  // console.log(await getDestinationPicture("milan, italy"));
 };
 test();
