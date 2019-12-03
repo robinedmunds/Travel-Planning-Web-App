@@ -51,16 +51,15 @@ async function getDestinationCoords(destination) {
     const city = response.geonames[0].name;
     const country = response.geonames[0].countryName;
     // return { latitude: latitude, longitude: longitude };
-    return { latitude, longitude, city, country };
+    return { coords: {latitude, longitude}, city, country };
   } catch (err) {
     console.log("Error in getDestinationCoords: " + err);
   };
 };
 
-async function getWeatherData(destination, date=null) {
+async function getWeatherData(coords, date=null) {
   // take coords from getDestinationCoords func, call dark sky api, return response
   // return only, high, low, text summary
-  const coords = await getDestinationCoords(destination);
   const key = process.env.DARKSKY_KEY;
   const latitude = coords.latitude;
   const longitude = coords.longitude;
@@ -97,23 +96,14 @@ async function getDestinationPicture(query) {
   };
 };
 
-async function buildTravelCardResponse(destination, departDate) {
-  // use api call funcs to build /api/travel-card response obj
-  class TravelCardResponse {
-    
-  }
-
-  // {
-  //   city: "Pietermaritzburg",
-  //   country: "South Africa",
-  //   departDate: new Date(2020, 4 - 1, 24),
-  //   picture: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Upland_South_Africa_Savanna.jpg",
-  //   weather: {
-  //     high: 32,
-  //     low: 24,
-  //     forecast: "Hot and sunny throughout the day. Wear a hat."
-  //    }
-  // }
+class TravelCardResponse {
+  constructor(departDate, geonames, darksky, pixabay) {
+    this.city = geonames.city;
+    this.country = geonames.country;
+    this.departDate = departDate;
+    this.picture = pixabay.picture;
+    this.weather = darksky;
+  };
 };
 
 app.get("/", (req, res) => {
@@ -134,9 +124,14 @@ app.post("/api/travel-card", (req, res) => {
 });
 
 const test = async () => {
-  console.log(await getDestinationCoords("london, uk"));
-  // console.log(await getWeatherData("evesham"));
-  // console.log(await getWeatherData("evesham,uk", new Date("2021-04-01")));
-  // console.log(await getDestinationPicture("milan, italy"));
+
+  const destination = "cairo, egypt";
+  const departDate = new Date("2020-03-26");
+  const geonames = await getDestinationCoords(destination);
+  const darksky = await getWeatherData(geonames.coords, departDate);
+  const pixabay = await getDestinationPicture(destination);
+  const instance = new TravelCardResponse(departDate, geonames, darksky, pixabay);
+  console.log(instance);
+
 };
 // test();
