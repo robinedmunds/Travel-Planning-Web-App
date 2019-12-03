@@ -18,5 +18,10 @@ app.listen(LISTEN_PORT, () => {
 });
 
 app.get("/", (req, res) => {
-  res.send("responding on path /");
+  res.send("responding on path \"/\"");
+});
+
+app.post("/api/travel-card", (req, res) => {
+  // TODO: take post data, respond with dummy obj
+  res.send("responding on path \"/api/travel-card\"");
 });
