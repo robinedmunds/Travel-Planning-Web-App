@@ -21,7 +21,7 @@ app.listen(LISTEN_PORT, () => {
 });
 
 async function fetchAPI(url, method) {
-  const response = await fetch(url, { method: method })
+  const response = await fetch(url, { method })
     .then(res => res);
   return await response.json();
 };
@@ -55,10 +55,10 @@ async function getWeatherData(coords, date=null) {
   try {
     const toCelsius = (f) => Math.round((f-32) * (5/9));
     const response = await fetchAPI(url, method);
-    const highTemp = toCelsius(response.daily.data[0].temperatureHigh);
-    const lowTemp = toCelsius(response.daily.data[0].temperatureLow);
-    const summary = response.daily.data[0].summary;
-    return { high: highTemp, low: lowTemp, forecast: summary };
+    const high = toCelsius(response.daily.data[0].temperatureHigh);
+    const low = toCelsius(response.daily.data[0].temperatureLow);
+    const forecast = response.daily.data[0].summary;
+    return { high, low, forecast };
   } catch (err) {
     console.log("Error in getWeatherData: -\n" + err);
   };
@@ -72,7 +72,7 @@ async function getDestinationPicture(query) {
     const response = await fetchAPI(url, method);
     const picture = response.hits[0].largeImageURL;
     const tags = response.hits[0].tags;
-    return { picture: picture, tags: tags };
+    return { picture, tags };
   } catch (err) {
     console.log("Error in getDestinationPicture: -\n" + err);
   };
