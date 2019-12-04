@@ -125,13 +125,22 @@ app.get("/", (req, res) => {
 });
 
 app.post("/api/travel-card", async (req, res) => {
-  const postData = req.body;
-  if (postData.destination && postData.departDate) {
-    const destination = postData.destination;
-    const departDate = new Date(postData.departDate);  // TODO: validate date
-    res.send(await buildTravelCardResponse(destination, departDate));
-  } else {
-    res.send("Error: Expected POST data invalid or missing. e.g destination=\"Paris, UK\"&departDate=\"2021-04-1T00:00:00.000Z\"");
+  try {
+    const destination = req.body.destination;
+    const departDateJSON = req.body.departDate;
+  
+    if (destination && departDateJSON) {
+      if (isDateValid(departDateJSON)) {
+        const departDate = new Date(departDateJSON);
+        res.send(await buildTravelCardResponse(destination, departDate));
+      } else {
+        res.status(400).send("Error: Invalid date. JSON date format expected.");
+      };
+    } else {
+      res.status(400).send("Error: Expected POST data invalid or missing. e.g destination=\"London, UK\"&departDate=\"2021-04-1T00:00:00.000Z\"");
+    };
+  } catch (err) {
+    console.log("Error in \"/api/travel-card\" callback: -\n" + err);
   };
 });
 
