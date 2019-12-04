@@ -133,7 +133,7 @@ app.post("/api/travel-card", async (req, res) => {
     const isValidDate = (date) => !isNaN(Date.parse(date));
     const destination = req.body.destination;
     const departDateISO = req.body.departDate;
-  
+
     if (destination && departDateISO) {
 
       if (isValidDate(departDateISO)) {
