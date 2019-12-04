@@ -59,10 +59,12 @@ async function getWeatherData(coords, date=null) {
   try {
     const toCelsius = (fahrenheit) => Math.round((fahrenheit-32) * (5/9));
     const response = await fetchAPI(url, method);
-    const high = toCelsius(response.daily.data[0].temperatureHigh);
-    const low = toCelsius(response.daily.data[0].temperatureLow);
-    const forecast = response.daily.data[0].summary;
-    return { high, low, forecast };
+    if (response) {
+      const high = toCelsius(response.daily.data[0].temperatureHigh);
+      const low = toCelsius(response.daily.data[0].temperatureLow);
+      const forecast = response.daily.data[0].summary;
+      return { high, low, forecast };
+    };
   } catch (err) {
     console.log("Error in getWeatherData: -\n" + err);
   };
@@ -124,14 +126,10 @@ app.post("/api/travel-card", async (req, res) => {
 });
 
 const test = async () => {
-  const bad = "lkajgflkajdf";
-  const good = "london, uk";
 
-  const geonames = await getDestinationCoords(good);
-  if (geonames) {
-    const darksky = await getWeatherData(geonames.coords);
-    console.log(darksky);
-  } else { console.log("no geonames res")}
+  const input = {latitude: 0, longitude: 0};
+  const darksky = await getWeatherData(input);
+  console.log(darksky)
 
 };
-test();
+// test();
