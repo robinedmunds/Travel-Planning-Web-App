@@ -151,7 +151,7 @@ app.post("/api/travel-card", async (req, res) => {
       };
 
     } else {
-      res.status(400).send("Error: Expected POST data invalid or missing. e.g destination=\"London, UK\"&departDate=\"2021-04-1T00:00:00.000Z\"");
+      res.status(400).send("Error: Expected POST data missing. (destination=\"London, UK\"&departDate=\"2020-12-30)\"");
     };
 
   } catch (err) {
