@@ -56,8 +56,11 @@ async function addTripButtonClickCallback(event) {
         const travelCardRes = await fetchTravelCardJSON(destination, isoDate);
 
         if (travelCardRes) {
-          // travelCard(travelCardRes);
           console.log(travelCardRes);
+          const main = document.querySelector("main");
+          main.insertAdjacentHTML("afterbegin", travelCard(travelCardRes));
+        } else {
+          destinationInput.classList.add("borders-danger");
         };
 
       } catch (err) {
@@ -69,11 +72,10 @@ async function addTripButtonClickCallback(event) {
       departureInput.classList.add("borders-danger");
     };
   };
-  // TODO: if both inputs valid, make fetch req to backend
 };
 
 function main() {
-  addDummyTravelCards();
+  // addDummyTravelCards();
   const addTripButton = document.getElementById("add-trip");
   addTripButton.addEventListener("click", (event) => { addTripButtonClickCallback(event) });
 };
