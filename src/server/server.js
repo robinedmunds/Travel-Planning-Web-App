@@ -28,7 +28,7 @@ async function fetchAPI(url, method) {
   };
 };
 
-const isDateValid = (date) => {
+const isValidDate = (date) => {
   if (!isNaN(Date.parse(date))) {
     return true;
   } else {
@@ -130,7 +130,7 @@ app.post("/api/travel-card", async (req, res) => {
     const departDateJSON = req.body.departDate;
   
     if (destination && departDateJSON) {
-      if (isDateValid(departDateJSON)) {
+      if (isValidDate(departDateJSON)) {
         const departDate = new Date(departDateJSON);
         res.send(await buildTravelCardResponse(destination, departDate));
       } else {
@@ -147,7 +147,7 @@ app.post("/api/travel-card", async (req, res) => {
 const test = async () => {
   const dest = "boston, usa";
   const date = new Date("2020-03-30");
-  if (isDateValid(date)) {
+  if (isValidDate(date)) {
     const output = await buildTravelCardResponse(dest, date);
     console.log(output);
   }
