@@ -23,7 +23,9 @@ app.listen(LISTEN_PORT, () => {
 async function fetchAPI(url, method) {
   const response = await fetch(url, { method })
     .then(res => res);
-  return await response.json();
+  if (response.ok) {
+    return await response.json();
+  };
 };
 
 async function getDestinationCoords(destination) {
@@ -32,11 +34,13 @@ async function getDestinationCoords(destination) {
   const method = "GET";
   try {
     const response = await fetchAPI(url, method);
-    const latitude = response.geonames[0].lat;
-    const longitude = response.geonames[0].lng;
-    const city = response.geonames[0].name;
-    const country = response.geonames[0].countryName;
-    return { coords: {latitude, longitude}, city, country };
+    if (response.totalResultsCount > 0) {
+      const latitude = response.geonames[0].lat;
+      const longitude = response.geonames[0].lng;
+      const city = response.geonames[0].name;
+      const country = response.geonames[0].countryName;
+      return { coords: {latitude, longitude}, city, country };
+    };
   } catch (err) {
     console.log("Error in getDestinationCoords: -\n" + err);
   };
@@ -114,3 +118,10 @@ app.post("/api/travel-card", async (req, res) => {
     res.send("Error: Expected POST data invalid or missing. e.g destination=\"Paris, UK\"&departDate=\"2021-04-1T00:00:00.000Z\"");
   };
 });
+
+const test = async () => {
+  const bad = "lkajgflkajdf";
+  const good = "london, uk";
+  console.log(await getDestinationCoords(good));
+};
+// test();
