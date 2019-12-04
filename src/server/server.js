@@ -28,14 +28,6 @@ async function fetchAPI(url, method) {
   };
 };
 
-const isValidDate = (date) => {
-  if (!isNaN(Date.parse(date))) {
-    return true;
-  } else {
-    return false;
-  };
-};
-
 async function getDestinationCoords(destination) {
   const credentials = JSON.parse(process.env.GEONAMES);
   const url = `http://api.geonames.org/searchJSON?q=${destination}&maxRows=1&username=${credentials.username}&password=${credentials.password}`;
@@ -126,6 +118,7 @@ app.get("/", (req, res) => {
 
 app.post("/api/travel-card", async (req, res) => {
   try {
+    const isValidDate = (date) => !isNaN(Date.parse(date));
     const destination = req.body.destination;
     const departDateJSON = req.body.departDate;
   
