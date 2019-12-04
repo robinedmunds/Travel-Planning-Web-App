@@ -125,7 +125,7 @@ async function buildTravelCardResponse(destination, departDate) {
 };
 
 app.get("/", (req, res) => {
-  res.send("responding on path \"/\"");
+  res.sendFile(__dirname);
 });
 
 app.post("/api/travel-card", async (req, res) => {
