@@ -76,9 +76,12 @@ async function getDestinationPicture(query) {
   const method = "GET";
   try {
     const response = await fetchAPI(url, method);
-    const picture = response.hits[0].largeImageURL;
-    const tags = response.hits[0].tags;
-    return { picture, tags };
+    console.log(response);
+    if (response.totalHits > 0) {
+      const picture = response.hits[0].largeImageURL;
+      const tags = response.hits[0].tags;
+      return { picture, tags };
+    };
   } catch (err) {
     console.log("Error in getDestinationPicture: -\n" + err);
   };
@@ -127,9 +130,9 @@ app.post("/api/travel-card", async (req, res) => {
 
 const test = async () => {
 
-  const input = {latitude: 0, longitude: 0};
-  const darksky = await getWeatherData(input);
-  console.log(darksky)
+  const input = "709870987";
+  const pixabay = await getDestinationPicture(input);
+  console.log(pixabay)
 
 };
-// test();
+test();
