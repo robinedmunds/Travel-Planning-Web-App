@@ -9,12 +9,13 @@ export function travelCard(res) {
 
   const city = res.city;
   const country = res.country;
-  const departDate = res.departDate.toLocaleDateString("en-GB", {
+  const departDate = new Date(res.departDate);
+  const departDateUK = departDate.toLocaleDateString("en-GB", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
-  const countdownDays = countdownDaysCalc(res.departDate);
+  const countdownDays = countdownDaysCalc(departDate);
   const picture = res.picture;
   const highTemp = res.weather.high;
   const lowTemp = res.weather.low;
@@ -27,7 +28,7 @@ export function travelCard(res) {
       </div>
       <div class="travel-card-right">
         <h2>My trip to: ${city}, ${country}</h2>
-        <h2>Departing: ${departDate} - (${countdownDays} days)</h2>
+        <h2>Departing: ${departDateUK} - (${countdownDays} days)</h2>
         <div class="travel-card-buttons">
           <button>Save Trip</button>
           <button>Remove Trip</button>
