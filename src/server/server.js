@@ -106,18 +106,29 @@ class TravelCardResponse {
   };
 };
 
+async function buildTravelCardResponse(destination, departDate) {
+  try {
+    const geonames = await getDestinationCoords(destination);
+    const darksky = await getWeatherData(geonames.coords, departDate);
+    const pixabay = await getDestinationPicture(destination);
+    const instance = new TravelCardResponse(departDate, geonames, darksky, pixabay);
+    return JSON.stringify(instance);
+  } catch (err) {
+    console.log("Error in buildTravelCardResponse: " + err);
+  }
+};
+
 app.get("/", (req, res) => {
   res.send("responding on path \"/\"");
 });
 
-app.post("/api/travel-card", (req, res) => {
-  // TODO: take post data, respond with dummy obj
+app.post("/api/travel-card", async (req, res) => {
   const postData = req.body;
+  console.log(postData);
   if (postData.destination && postData.departDate) {
     const destination = postData.destination;
     const departDate = new Date(postData.departDate);  // TODO: validate date
-    const response = buildTravelCardResponseDummy(destination, departDate);
-    res.send(JSON.stringify(response));
+    res.send(await buildTravelCardResponse(destination, departDate));
   } else {
     res.send("Error: Expected POST data invalid or missing. e.g destination=\"Paris, UK\"&departDate=\"2021-04-1T00:00:00.000Z\"");
   };
