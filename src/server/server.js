@@ -151,14 +151,3 @@ app.post("/api/travel-card", async (req, res) => {
     console.log("Error in \"/api/travel-card\" callback: -\n" + err);
   };
 });
-
-const test = async () => {
-  const dest = "boston, usa";
-  const date = new Date("2020-03-30");
-  if (isValidDate(date)) {
-    const output = await buildTravelCardResponse(dest, date);
-    console.log(output);
-  }
-
-};
-// test();
