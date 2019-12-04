@@ -103,10 +103,10 @@ async function buildTravelCardResponse(destination, departDate) {
     if (geonames) {
       const darksky = await getWeatherData(geonames.coords, departDate);
       const pixabay = await getDestinationPicture(destination);
-    };
-    if (darksky && pixabay) {
-      const instance = new TravelCardResponse(departDate, geonames, darksky, pixabay);
-      return JSON.stringify(instance);
+      if (darksky && pixabay) {
+        const instance = new TravelCardResponse(departDate, geonames, darksky, pixabay);
+        return JSON.stringify(instance);
+      };
     };
   } catch (err) {
     console.log("Error in buildTravelCardResponse: -\n" + err);
@@ -130,9 +130,10 @@ app.post("/api/travel-card", async (req, res) => {
 
 const test = async () => {
 
-  const input = "709870987";
-  const pixabay = await getDestinationPicture(input);
-  console.log(pixabay)
+  const dest = "709870987";
+  const date = new Date("2020-03-26");
+  const output = await buildTravelCardResponse(dest, date);
+  console.log(output);
 
 };
 test();
