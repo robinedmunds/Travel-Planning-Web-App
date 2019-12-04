@@ -132,12 +132,12 @@ app.post("/api/travel-card", async (req, res) => {
   try {
     const isValidDate = (date) => !isNaN(Date.parse(date));
     const destination = req.body.destination;
-    const departDateJSON = req.body.departDate;
+    const departDateISO = req.body.departDate;
   
-    if (destination && departDateJSON) {
+    if (destination && departDateISO) {
 
-      if (isValidDate(departDateJSON)) {
-        const departDate = new Date(departDateJSON);
+      if (isValidDate(departDateISO)) {
+        const departDate = new Date(departDateISO);
         const travelCardJSON = await buildTravelCardResponse(destination, departDate);
 
         if (travelCardJSON) {
@@ -147,7 +147,7 @@ app.post("/api/travel-card", async (req, res) => {
         };
 
       } else {
-        res.status(400).send("Error: Invalid date. JSON date format expected.");
+        res.status(400).send("Error: Invalid date. ISO date format expected. (yyyy-mm-dd)");
       };
 
     } else {
