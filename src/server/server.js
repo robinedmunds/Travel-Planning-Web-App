@@ -132,10 +132,18 @@ app.post("/api/travel-card", async (req, res) => {
     if (destination && departDateJSON) {
       if (isValidDate(departDateJSON)) {
         const departDate = new Date(departDateJSON);
-        res.send(await buildTravelCardResponse(destination, departDate));
+        const travelCardJSON = await buildTravelCardResponse(destination, departDate);
+
+        if (travelCardJSON) {
+          res.send(travelCardJSON);
+        } else {
+          res.status(400).send("Error: TravelCard response object could not be built. This is likely due to a mistyped destination.");
+        };
+
       } else {
         res.status(400).send("Error: Invalid date. JSON date format expected.");
       };
+
     } else {
       res.status(400).send("Error: Expected POST data invalid or missing. e.g destination=\"London, UK\"&departDate=\"2021-04-1T00:00:00.000Z\"");
     };
