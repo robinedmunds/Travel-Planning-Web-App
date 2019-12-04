@@ -28,6 +28,14 @@ async function fetchAPI(url, method) {
   };
 };
 
+const isDateValid = (date) => {
+  if (!isNaN(Date.parse(date))) {
+    return true;
+  } else {
+    return false;
+  };
+};
+
 async function getDestinationCoords(destination) {
   const credentials = JSON.parse(process.env.GEONAMES);
   const url = `http://api.geonames.org/searchJSON?q=${destination}&maxRows=1&username=${credentials.username}&password=${credentials.password}`;
@@ -76,7 +84,6 @@ async function getDestinationPicture(query) {
   const method = "GET";
   try {
     const response = await fetchAPI(url, method);
-    console.log(response);
     if (response.totalHits > 0) {
       const picture = response.hits[0].largeImageURL;
       const tags = response.hits[0].tags;
@@ -129,11 +136,12 @@ app.post("/api/travel-card", async (req, res) => {
 });
 
 const test = async () => {
-
-  const dest = "709870987";
-  const date = new Date("2020-03-26");
-  const output = await buildTravelCardResponse(dest, date);
-  console.log(output);
+  const dest = "boston, usa";
+  const date = new Date("2020-03-30");
+  if (isDateValid(date)) {
+    const output = await buildTravelCardResponse(dest, date);
+    console.log(output);
+  }
 
 };
-test();
+// test();
