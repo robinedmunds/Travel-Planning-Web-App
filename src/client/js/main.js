@@ -26,7 +26,7 @@ async function fetchTravelCardJSON(destination, departDate) {
 const test = async () => console.log(await fetchTravelCardJSON("london,uk", "2021-11-22"));
 // test();
 
-function addTripButtonClickCallback(event) {
+async function addTripButtonClickCallback(event) {
   event.preventDefault();
 
   const destinationInput = document.getElementById("destination");
@@ -45,11 +45,25 @@ function addTripButtonClickCallback(event) {
   } else {
     const departureArray = departure.split("/").reverse();
     const isoDate = departureArray.join("-");
+
     if (!isNaN(Date.parse(isoDate))) {
       // valid user input date
       departureInput.classList.remove("borders-danger");
-      const dateObj = new Date(isoDate);
-      console.log(dateObj);  // TODO: remove, testing
+
+      try {
+        // run fetchTravelCardJSON on validated user input
+        // pass JSON to travelCard element build
+        const travelCardRes = await fetchTravelCardJSON(destination, isoDate);
+
+        if (travelCardRes) {
+          // travelCard(travelCardRes);
+          console.log(travelCardRes);
+        };
+
+      } catch (err) {
+        console.log("Error: fetchTravelCardJSON failed\n" + err);
+      };
+
     } else {
       console.log("date invalid");  // TODO: remove, testing
       departureInput.classList.add("borders-danger");
