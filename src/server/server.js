@@ -20,20 +20,6 @@ app.listen(LISTEN_PORT, () => {
   console.log(`Server started on port: ${LISTEN_PORT}`);
 });
 
-function buildTravelCardResponseDummy(destination, departDate) {
-  return {
-    city: "Pietermaritzburg",
-    country: "South Africa",
-    departDate: new Date(2020, 4 - 1, 24),
-    picture: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Upland_South_Africa_Savanna.jpg",
-    weather: {
-      high: 32,
-      low: 24,
-      forecast: "Hot and sunny throughout the day. Wear a hat."
-    }
-  };
-};
-
 async function fetchAPI(url, method) {
   const response = await fetch(url, { method: method })
     .then(res => res);
@@ -50,16 +36,13 @@ async function getDestinationCoords(destination) {
     const longitude = response.geonames[0].lng;
     const city = response.geonames[0].name;
     const country = response.geonames[0].countryName;
-    // return { latitude: latitude, longitude: longitude };
     return { coords: {latitude, longitude}, city, country };
   } catch (err) {
-    console.log("Error in getDestinationCoords: " + err);
+    console.log("Error in getDestinationCoords: -\n" + err);
   };
 };
 
 async function getWeatherData(coords, date=null) {
-  // take coords from getDestinationCoords func, call dark sky api, return response
-  // return only, high, low, text summary
   const key = process.env.DARKSKY_KEY;
   const latitude = coords.latitude;
   const longitude = coords.longitude;
@@ -76,13 +59,12 @@ async function getWeatherData(coords, date=null) {
     const lowTemp = toCelsius(response.daily.data[0].temperatureLow);
     const summary = response.daily.data[0].summary;
     return { high: highTemp, low: lowTemp, forecast: summary };
-  } catch {err} {
-    console.log("Error in getWeatherData: " + err);
+  } catch (err) {
+    console.log("Error in getWeatherData: -\n" + err);
   };
 };
 
 async function getDestinationPicture(query) {
-  // query pixabay with dest, return first img url
   const key = process.env.PIXABAY_KEY;
   const url = `https://pixabay.com/api/?q=${query}&image_type=photo&min_height=720&orientation=horizontal&safesearch=true&category=travel&key=${key}`;
   const method = "GET";
@@ -91,22 +73,22 @@ async function getDestinationPicture(query) {
     const picture = response.hits[0].largeImageURL;
     const tags = response.hits[0].tags;
     return { picture: picture, tags: tags };
-  } catch { err } {
-    console.log("Error in getDestinationPicture: " + err);
-  };
-};
-
-class TravelCardResponse {
-  constructor(departDate, geonames, darksky, pixabay) {
-    this.city = geonames.city;
-    this.country = geonames.country;
-    this.departDate = departDate;
-    this.picture = pixabay.picture;
-    this.weather = darksky;
+  } catch (err) {
+    console.log("Error in getDestinationPicture: -\n" + err);
   };
 };
 
 async function buildTravelCardResponse(destination, departDate) {
+  class TravelCardResponse {
+    constructor(departDate, geonames, darksky, pixabay) {
+      this.city = geonames.city;
+      this.country = geonames.country;
+      this.departDate = departDate;
+      this.picture = pixabay.picture;
+      this.weather = darksky;
+    };
+  };
+
   try {
     const geonames = await getDestinationCoords(destination);
     const darksky = await getWeatherData(geonames.coords, departDate);
@@ -114,7 +96,7 @@ async function buildTravelCardResponse(destination, departDate) {
     const instance = new TravelCardResponse(departDate, geonames, darksky, pixabay);
     return JSON.stringify(instance);
   } catch (err) {
-    console.log("Error in buildTravelCardResponse: " + err);
+    console.log("Error in buildTravelCardResponse: -\n" + err);
   }
 };
 
@@ -124,7 +106,6 @@ app.get("/", (req, res) => {
 
 app.post("/api/travel-card", async (req, res) => {
   const postData = req.body;
-  console.log(postData);
   if (postData.destination && postData.departDate) {
     const destination = postData.destination;
     const departDate = new Date(postData.departDate);  // TODO: validate date
@@ -133,16 +114,3 @@ app.post("/api/travel-card", async (req, res) => {
     res.send("Error: Expected POST data invalid or missing. e.g destination=\"Paris, UK\"&departDate=\"2021-04-1T00:00:00.000Z\"");
   };
 });
-
-const test = async () => {
-
-  const destination = "cairo, egypt";
-  const departDate = new Date("2020-03-26");
-  const geonames = await getDestinationCoords(destination);
-  const darksky = await getWeatherData(geonames.coords, departDate);
-  const pixabay = await getDestinationPicture(destination);
-  const instance = new TravelCardResponse(departDate, geonames, darksky, pixabay);
-  console.log(instance);
-
-};
-// test();
