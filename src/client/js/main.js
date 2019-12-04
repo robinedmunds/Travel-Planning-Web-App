@@ -4,11 +4,11 @@ import { travelCardHTML } from "./travelCardHTML";
 
 async function fetchTravelCardAPI(destination, departDate) {
   try {
-    const url = "/api/travel-card";
+    const url = "http://localhost:3000/api/travel-card";
     const postData = { destination, departDate };
     const response = await fetch(url, {
       method: "POST",
-      mode: "same-origin",
+      mode: "cors",
       headers: { "Content-Type": "application/json" },
       referrer: "no-referrer",
       body: JSON.stringify(postData)

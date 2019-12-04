@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-const LISTEN_PORT = 8080;
+const LISTEN_PORT = 3000;
 
 app.listen(LISTEN_PORT, () => {
   console.log(`Server started on port: ${LISTEN_PORT}`);
