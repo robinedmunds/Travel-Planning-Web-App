@@ -54,7 +54,7 @@ async function getWeatherData(coords, date=null) {
     const key = process.env.DARKSKY_KEY;
     const latitude = coords.latitude;
     const longitude = coords.longitude;
-    let url = `https://api.darksky.net/forecast/${key}/${latitude},${longitude}?exclude=currently,flags`;
+    let url = `https://api.darksky.net/forecast/${key}/${latitude},${longitude}`;
     const method = "GET";
 
     if (date) {
