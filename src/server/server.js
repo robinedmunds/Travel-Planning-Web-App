@@ -57,7 +57,7 @@ async function getWeatherData(coords, date=null) {
     url = url + `,${epochTime}`;
   };
   try {
-    const toCelsius = (f) => Math.round((f-32) * (5/9));
+    const toCelsius = (fahrenheit) => Math.round((fahrenheit-32) * (5/9));
     const response = await fetchAPI(url, method);
     const high = toCelsius(response.daily.data[0].temperatureHigh);
     const low = toCelsius(response.daily.data[0].temperatureLow);
@@ -95,10 +95,14 @@ async function buildTravelCardResponse(destination, departDate) {
 
   try {
     const geonames = await getDestinationCoords(destination);
-    const darksky = await getWeatherData(geonames.coords, departDate);
-    const pixabay = await getDestinationPicture(destination);
-    const instance = new TravelCardResponse(departDate, geonames, darksky, pixabay);
-    return JSON.stringify(instance);
+    if (geonames) {
+      const darksky = await getWeatherData(geonames.coords, departDate);
+      const pixabay = await getDestinationPicture(destination);
+    };
+    if (darksky && pixabay) {
+      const instance = new TravelCardResponse(departDate, geonames, darksky, pixabay);
+      return JSON.stringify(instance);
+    };
   } catch (err) {
     console.log("Error in buildTravelCardResponse: -\n" + err);
   }
@@ -122,6 +126,12 @@ app.post("/api/travel-card", async (req, res) => {
 const test = async () => {
   const bad = "lkajgflkajdf";
   const good = "london, uk";
-  console.log(await getDestinationCoords(good));
+
+  const geonames = await getDestinationCoords(good);
+  if (geonames) {
+    const darksky = await getWeatherData(geonames.coords);
+    console.log(darksky);
+  } else { console.log("no geonames res")}
+
 };
-// test();
+test();
