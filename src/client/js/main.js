@@ -3,6 +3,29 @@
 import { travelCard } from "./travelCard";
 import { addDummyTravelCards } from "./addDummy";  // TODO: remove, testing
 
+async function fetchTravelCardJSON(destination, departDate) {
+  try {
+    const url = "/api/travel-card";
+    const postData = { destination, departDate };
+    const response = await fetch(url, {
+      method: "POST",
+      mode: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      referrer: "no-referrer",
+      body: JSON.stringify(postData)
+    });
+
+    if (response.ok) {
+      return response.json();
+    };
+  } catch (err) {
+    console.log("Error in fetchTravelCardJSON: " + err);
+  };
+};
+
+const test = async () => console.log(await fetchTravelCardJSON("london,uk", "2021-11-22"));
+// test();
+
 function addTripButtonClickCallback(event) {
   event.preventDefault();
 
