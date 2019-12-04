@@ -111,7 +111,12 @@ async function buildTravelCardResponse(destination, departDate) {
 
     if (geonames) {
       const darksky = await getWeatherData(geonames.coords, departDate);
-      const pixabay = await getDestinationPicture(destination);
+      const pixabayQuery = [geonames.city, geonames.country].join(" ");
+      let pixabay = await getDestinationPicture(pixabayQuery);
+
+      if (!pixabay) {
+        pixabay = await getDestinationPicture(geonames.country);
+      };
 
       if (darksky && pixabay) {
         const instance = new TravelCardResponse(departDate, geonames, darksky, pixabay);
