@@ -1,9 +1,8 @@
 "use strict";
 
-import { travelCard } from "./travelCard";
-import { addDummyTravelCards } from "./addDummy";  // TODO: remove, testing
+import { travelCardHTML } from "./travelCardHTML";
 
-async function fetchTravelCardJSON(destination, departDate) {
+async function fetchTravelCardAPI(destination, departDate) {
   try {
     const url = "/api/travel-card";
     const postData = { destination, departDate };
@@ -19,12 +18,9 @@ async function fetchTravelCardJSON(destination, departDate) {
       return response.json();
     };
   } catch (err) {
-    console.log("Error in fetchTravelCardJSON: " + err);
+    console.log("Error in fetchTravelCardAPI: " + err);
   };
 };
-
-const test = async () => console.log(await fetchTravelCardJSON("london,uk", "2021-11-22"));
-// test();
 
 async function addTripButtonClickCallback(event) {
   event.preventDefault();
@@ -40,31 +36,30 @@ async function addTripButtonClickCallback(event) {
 
   const departureInput = document.getElementById("departure");
   const departure = departureInput.value;
+
   if (!departure) {
     departureInput.classList.add("borders-danger");
   } else {
+    const isValidDate = (date) => !isNaN(Date.parse(date));
     const departureArray = departure.split("/").reverse();
     const isoDate = departureArray.join("-");
 
-    if (!isNaN(Date.parse(isoDate))) {
-      // valid user input date
+    if (isValidDate(isoDate)) {
       departureInput.classList.remove("borders-danger");
 
       try {
-        // run fetchTravelCardJSON on validated user input
-        // pass JSON to travelCard element build
-        const travelCardRes = await fetchTravelCardJSON(destination, isoDate);
+        const travelCardRes = await fetchTravelCardAPI(destination, isoDate);
 
         if (travelCardRes) {
           console.log(travelCardRes);
           const main = document.querySelector("main");
-          main.insertAdjacentHTML("afterbegin", travelCard(travelCardRes));
+          main.insertAdjacentHTML("afterbegin", travelCardHTML(travelCardRes));
         } else {
           destinationInput.classList.add("borders-danger");
         };
 
       } catch (err) {
-        console.log("Error: fetchTravelCardJSON failed\n" + err);
+        console.log("Error: fetchTravelCardAPI failed\n" + err);
       };
 
     } else {
@@ -75,7 +70,6 @@ async function addTripButtonClickCallback(event) {
 };
 
 function main() {
-  // addDummyTravelCards();
   const addTripButton = document.getElementById("add-trip");
   addTripButton.addEventListener("click", (event) => { addTripButtonClickCallback(event) });
 };
