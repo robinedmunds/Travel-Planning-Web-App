@@ -1,3 +1,5 @@
+"use strict";
+
 const calcDayDifference = (date1, date2) => {
   const msInDay = 24 * 60 * 60 * 1000;
   let difference;
