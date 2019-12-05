@@ -1,12 +1,8 @@
 "use strict";
 
-export function travelCardHTML(res) {
-  const countdownDaysCalc = (departDate) => {
-    const msInDay = 24 * 60 * 60 * 1000;
-    const difference = departDate - Date.now();
-    return Math.ceil(difference / msInDay);
-  };
+import { calcDayDifference } from "./helpers/calcDayDiff";
 
+export function travelCardHTML(res) {
   const city = res.city;
   const country = res.country;
   const departDate = new Date(res.departDate);
@@ -15,7 +11,7 @@ export function travelCardHTML(res) {
     month: "long",
     day: "numeric",
   });
-  const countdownDays = countdownDaysCalc(departDate);
+  const countdownDays = calcDayDifference(departDate, Date.now());
   const picture = res.picture;
   const highTemp = res.weather.high;
   const lowTemp = res.weather.low;
