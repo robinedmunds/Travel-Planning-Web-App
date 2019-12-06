@@ -36,7 +36,7 @@ h3 {
 }
 
 p {
-  padding: $padding-base 0;
+  padding: $padding-base/4 0;
   line-height: 1.4em;
 }
 
@@ -46,7 +46,6 @@ button {
   font-family: inherit;
   background-color: $highlight-bright;
   color: inherit;
-  @extend %horizontal-borders;
   &:hover {
     background-color: $highlight-dark;
   }
@@ -55,11 +54,9 @@ button {
   }
 }
 
-img {
-  @extend %horizontal-borders;
-}
-
-input {
+img,
+input,
+button {
   @extend %horizontal-borders;
 }
 
