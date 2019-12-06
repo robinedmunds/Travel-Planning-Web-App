@@ -9,7 +9,7 @@ function main() {
     addTripButtonClickCallback(event)
   });
 
-  // addDummyTravelCards();  // TODO: remove testing
+  // window.addEventListener("load", () => { addDummyTravelCards();});  // TODO: remove testing
 };
 
 main();
