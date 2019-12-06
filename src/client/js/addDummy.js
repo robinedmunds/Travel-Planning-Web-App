@@ -1,9 +1,9 @@
 "use strict";
 
 import { travelCardHTML } from "./travelCardHTML";
+import { sortTravelCards } from "./sortTravelCards";
 
 export function addDummyTravelCards() {
-
   const dummies = [
     {
       city: "Pietermaritzburg",
@@ -19,7 +19,7 @@ export function addDummyTravelCards() {
     {
       city: "Lisbon",
       country: "Portugal",
-      departDate: "2020-4-24",
+      departDate: "2020-7-12",
       picture: "https://upload.wikimedia.org/wikipedia/commons/8/89/Alc%C3%A2ntara_by_wax115.jpg",
       weather: {
         high: 14,
@@ -41,8 +41,10 @@ export function addDummyTravelCards() {
   ];
 
   const main = document.getElementById("travel-card-container");
+
   for (let i of dummies) {
     main.insertAdjacentHTML("afterbegin", travelCardHTML(i));
   };
 
+  sortTravelCards();
 };
