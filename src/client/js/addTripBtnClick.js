@@ -2,6 +2,7 @@
 
 import { travelCardHTML } from "./travelCardHTML";
 import { sortTravelCards } from "./sortTravelCards";
+import { expireTravelCards } from "./expireTravelCards";
 
 async function fetchTravelCardAPI(destination, departDate) {
   try {
@@ -56,6 +57,7 @@ async function addTripButtonClickCallback(event) {
           const main = document.querySelector("main");
           main.insertAdjacentHTML("afterbegin", travelCardHTML(travelCardRes));
           sortTravelCards();
+          expireTravelCards();
         } else {
           destinationInput.classList.add("borders-danger");
         };
