@@ -88,6 +88,12 @@ async function getDestinationPicture(query) {
       const picture = response.hits[0].largeImageURL;
       const tags = response.hits[0].tags;
       return { picture, tags };
+    } else {
+      const nullResponse = {
+        picture: "https://upload.wikimedia.org/wikipedia/commons/8/8c/2010-06-30_B757_OpenSkies_F-HAVN_EDDF_02.jpg",
+        tags: "Fly away."
+      };
+      return nullResponse;
     };
 
   } catch (err) {
