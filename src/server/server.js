@@ -69,6 +69,10 @@ async function getWeatherData(coords, date=null) {
       const high = toCelsius(response.daily.data[0].temperatureHigh);
       const low = toCelsius(response.daily.data[0].temperatureLow);
       const forecast = response.daily.data[0].summary;
+      if (!forecast) {
+        const nullForecast = "Forecast summary unavailable.";
+        return { high, low, forecast: nullForecast };
+      };
       return { high, low, forecast };
     };
 
