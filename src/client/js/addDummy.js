@@ -2,6 +2,7 @@
 
 import { travelCardHTML } from "./travelCardHTML";
 import { sortTravelCards } from "./sortTravelCards";
+import { expireTravelCards } from "./expireTravelCards";
 
 export function addDummyTravelCards() {
   const dummies = [
@@ -19,7 +20,7 @@ export function addDummyTravelCards() {
     {
       city: "Lisbon",
       country: "Portugal",
-      departDate: "2020-7-12",
+      departDate: "2018-7-12",
       picture: "https://upload.wikimedia.org/wikipedia/commons/8/89/Alc%C3%A2ntara_by_wax115.jpg",
       weather: {
         high: 14,
@@ -47,4 +48,5 @@ export function addDummyTravelCards() {
   };
 
   sortTravelCards();
+  expireTravelCards();
 };
