@@ -1,6 +1,7 @@
 "use strict";
 
 import { travelCardHTML } from "./travelCardHTML";
+import { sortTravelCards } from "./sortTravelCards";
 
 async function fetchTravelCardAPI(destination, departDate) {
   try {
@@ -54,6 +55,7 @@ async function addTripButtonClickCallback(event) {
           console.log(travelCardRes);
           const main = document.querySelector("main");
           main.insertAdjacentHTML("afterbegin", travelCardHTML(travelCardRes));
+          sortTravelCards();
         } else {
           destinationInput.classList.add("borders-danger");
         };
