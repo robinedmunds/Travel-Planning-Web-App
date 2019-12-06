@@ -18,7 +18,7 @@ export function travelCardHTML(res) {
   const forecast = res.weather.forecast;
 
   return `
-      <div class="travel-card">
+      <div class="travel-card" data-countdown="${countdownDays}">
         <div class="travel-card-left">
           <img src="${picture}" alt="${country}">
         </div>
