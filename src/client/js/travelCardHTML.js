@@ -18,25 +18,23 @@ export function travelCardHTML(res) {
   const forecast = res.weather.forecast;
 
   return `
-    <div class="travel-card">
-      <div class="travel-card-left">
-        <img src="${picture}" alt="${city}, ${country}">
-      </div>
-      <div class="travel-card-right">
-        <h2>My trip to: ${city}, ${country}</h2>
-        <h2>Departing: ${departDateUK} - (${countdownDays} days)</h2>
-        <div class="travel-card-buttons">
-          <button>Save Trip</button>
-          <button>Remove Trip</button>
+      <div class="travel-card">
+        <div class="travel-card-left">
+          <img src="${picture}" alt="${country}">
         </div>
-        <p>
-          The weather you should expect during your trip: -
-          </br >
-          Highs: ${highTemp}&deg;C - Lows: ${lowTemp}&deg;C
-          </br >
-          ${forecast}
-        </p>
+        <div class="travel-card-right">
+          <h2>${city}, ${country}</h2>
+          <h3 class="travel-card-depart">Departing: <strong>${departDateUK} - (${countdownDays} days)</strong></h2>
+          <div class="travel-card-buttons">
+            <button>Save Trip</button>
+            <button>Remove Trip</button>
+          </div>
+          <p>The weather you should expect during your trip: -</p>
+          <div class="travel-card-weather">
+            <p><strong>Highs: ${highTemp}&deg;C - Lows: ${lowTemp}&deg;C</strong></p>
+            <p><em>${forecast}</em></p>
+          </div>
+        </div>
       </div>
-    </div>
-  `
+    `
 };
