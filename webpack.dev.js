@@ -9,7 +9,7 @@ module.exports = {
     filename: "bundle.js"
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, "dist"),
     compress: true,
     port: 8080
   },
@@ -19,11 +19,11 @@ module.exports = {
         test: /\.(s*)css$/,
         use: [
           // Creates `style` nodes from JS strings
-          'style-loader',
+          "style-loader",
           // Translates CSS into CommonJS
-          'css-loader',
+          "css-loader",
           // Compiles Sass to CSS
-          'sass-loader'
+          "sass-loader"
         ],
       }
     ]
@@ -32,6 +32,6 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: "./src/client/views/ui.html",
       filename: "./index.html"
-    })
+    }),
   ]
 };
