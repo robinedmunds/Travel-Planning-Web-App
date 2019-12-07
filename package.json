@@ -7,7 +7,7 @@
     "dev": "webpack-dev-server --open --config webpack.dev.js",
     "prod": "webpack --config webpack.prod.js",
     "start": "npx nodemon src/server/server.js",
-    "test": "jest --watch"
+    "test": "jest"
   },
   "author": "Robin Edmunds",
   "license": "ISC",
