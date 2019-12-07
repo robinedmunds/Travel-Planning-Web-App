@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const ServiceWorkerWebpackPlugin = require("serviceworker-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -33,5 +34,8 @@ module.exports = {
       template: "./src/client/views/ui.html",
       filename: "./index.html"
     }),
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, "./src/client/js/sw/serviceWorker.js")
+    })
   ]
 };
