@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ServiceWorkerWebpackPlugin = require("serviceworker-webpack-plugin");
 
 module.exports = {
   mode: "production",
@@ -10,7 +11,7 @@ module.exports = {
     filename: "bundle.js"
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, "dist"),
     compress: true,
     port: 8080
   },
@@ -23,9 +24,9 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader
           },
           // Translates CSS into CommonJS
-          'css-loader',
+          "css-loader",
           // Compiles Sass to CSS
-          'sass-loader'
+          "sass-loader"
         ],
       }
     ]
@@ -38,5 +39,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "style.css",
     }),
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, "./src/client/js/sw/serviceWorker.js"),
+    })
   ]
 };
