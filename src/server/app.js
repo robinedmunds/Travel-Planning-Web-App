@@ -140,7 +140,7 @@ app.get("/", (req, res) => {
 app.post("/api/travel-card", async (req, res) => {
   try {
     const isValidDate = (date) => !isNaN(Date.parse(date));
-    const destination = req.body.destination;
+    const destination = encodeURIComponent(req.body.destination);
     const departDateISO = req.body.departDate;
 
     if (destination && departDateISO) {
